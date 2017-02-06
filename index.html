@@ -4,65 +4,76 @@
     <link rel="stylesheet" href="styles.css">
 
     <script type="text/javascript">
-//        (function() {
-            function cb(data) {
-                //use returned data
-
-                console.log(data["items"][1]["link"]);
-
-                var containingDiv = document.createElement('DIV');
+        //        (function() {
 
 
-                for (var i = 0; i < data["items"].length; i++) {
-                    var img = document.createElement('IMG');
-                    img.src = data["items"][i]["media"]["m"];
-                    img.alt = data["items"][i]["title"];
-                    img.width = "200";
-                    img.height = "200";
-                    containingDiv.appendChild(img);
-                }
+        function cb(data) {
+            sessionStorage.array = [];
 
-                document.body.appendChild(containingDiv);
+//            console.log(typeof sessionStorage.array);
 
-                function toggle(e) {
-                    console.log('clicked');
-                    console.log(e.target.getAttribute("class"));
-//                    console.log(e.target.hasAttribute("class"));
 
-                    if (!e.target.hasAttribute("class")) {
-                        console.log('yup');
-                        var att = document.createAttribute("class");
-                        att.value = "selected";
-                        e.target.setAttributeNode(att);
-                        return;
+            setUpImages(data);
 
-                    }
+        }
 
-                    if (e.target.getAttribute("class") === "selected") {
-                        e.target.setAttribute("class", "unselected");
-                    }
-                    else {
-                        e.target.setAttribute("class", "selected");
-                    }
 
-                }
+        function setUpImages(data) {
+            var containingDiv = document.createElement('DIV');
 
-                containingDiv.addEventListener('click', toggle, false);
+            for (var i = 0; i < data["items"].length; i++) {
+                var img = document.createElement('IMG');
+                img.src = data["items"][i]["media"]["m"];
+                img.alt = data["items"][i]["title"];
+                img.width = "200";
+                img.height = "200";
 
+                var attribute = document.createAttribute("index");
+                attribute.value = i;
+                img.setAttributeNode(attribute);
+
+                var classAttribute = document.createAttribute("class");
+                classAttribute.value = '';
+                img.setAttributeNode(classAttribute);
+
+                containingDiv.appendChild(img);
+
+                containingDiv.addEventListener('click', toggleSelected, false);
 
             }
 
+            document.body.appendChild(containingDiv);
+        }
+
+        function toggleSelected(e) {
+            if (e.target.getAttribute("class") === "" || e.target.getAttribute("class") === "deselected") {
+
+                e.target.setAttribute("class", "selected");
+//                console.log('yo');
+
+                var sesh = sessionStorage.array.split(",");
+
+                sesh.push(e.target.getAttribute("index"));
+
+                sessionStorage.array = sesh;
+
+                console.log(sessionStorage.array);
+
+            }
+            else {
+                e.target.setAttribute("class", "deselected");
+//                console.log('no');
+
+            }
+        }
 
 
+        var tags = 'london';
+        var script = document.createElement('script');
+        script.src = 'http://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=cb& tags=' + tags;
+        document.head.appendChild(script);
 
-
-
-            var tags = 'london';
-            var script = document.createElement('script');
-            script.src = 'http://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=cb& tags=' + tags;
-            document.head.appendChild(script);
-
-//        })();
+        //        })();
 
     </script>
 </head>
