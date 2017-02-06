@@ -1,6 +1,8 @@
 <!doctype html>
 <html>
 <head>
+    <link rel="stylesheet" href="styles.css">
+
     <script type="text/javascript">
 //        (function() {
             function cb(data) {
@@ -22,8 +24,30 @@
 
                 document.body.appendChild(containingDiv);
 
+                function toggle(e) {
+                    console.log('clicked');
+                    console.log(e.target.getAttribute("class"));
+//                    console.log(e.target.hasAttribute("class"));
 
+                    if (!e.target.hasAttribute("class")) {
+                        console.log('yup');
+                        var att = document.createAttribute("class");
+                        att.value = "selected";
+                        e.target.setAttributeNode(att);
+                        return;
 
+                    }
+
+                    if (e.target.getAttribute("class") === "selected") {
+                        e.target.setAttribute("class", "unselected");
+                    }
+                    else {
+                        e.target.setAttribute("class", "selected");
+                    }
+
+                }
+
+                containingDiv.addEventListener('click', toggle, false);
 
 
             }
