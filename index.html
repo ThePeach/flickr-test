@@ -8,11 +8,16 @@
 
 
         function cb(data) {
-            sessionStorage.array = [];
 
-//            console.log(typeof sessionStorage.array);
+            console.log(sessionStorage.array);
 
+            if (sessionStorage.array === '' || sessionStorage.array === undefined) {
+                console.log('poop');
+                sessionStorage.array = [];
 
+            }
+
+//            console.log(sessionStorage.array);
             setUpImages(data);
 
         }
@@ -63,6 +68,17 @@
             else {
                 e.target.setAttribute("class", "deselected");
 //                console.log('no');
+
+                var sesh = sessionStorage.array.split(",");
+
+                var index = sesh.indexOf(e.target.getAttribute("index"));
+
+                if (index > -1) {
+                    sesh.splice(index, 1);
+                }
+
+                sessionStorage.array = sesh;
+                console.log(sessionStorage.array);
 
             }
         }
