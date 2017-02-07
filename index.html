@@ -12,12 +12,9 @@
             console.log(sessionStorage.array);
 
             if (sessionStorage.array === '' || sessionStorage.array === undefined) {
-                console.log('poop');
                 sessionStorage.array = [];
 
             }
-
-//            console.log(sessionStorage.array);
             setUpImages(data);
 
         }
@@ -33,13 +30,16 @@
                 img.width = "200";
                 img.height = "200";
 
-                var attribute = document.createAttribute("index");
-                attribute.value = i;
-                img.setAttributeNode(attribute);
-
                 var classAttribute = document.createAttribute("class");
                 classAttribute.value = '';
                 img.setAttributeNode(classAttribute);
+
+                var sesh = sessionStorage.array.split(",");
+
+                if (sesh.indexOf(img.getAttribute("src")) !== -1) {
+                    img.setAttribute("class", "selected");
+                }
+
 
                 containingDiv.appendChild(img);
 
@@ -54,11 +54,10 @@
             if (e.target.getAttribute("class") === "" || e.target.getAttribute("class") === "deselected") {
 
                 e.target.setAttribute("class", "selected");
-//                console.log('yo');
 
                 var sesh = sessionStorage.array.split(",");
 
-                sesh.push(e.target.getAttribute("index"));
+                sesh.push(e.target.getAttribute("src"));
 
                 sessionStorage.array = sesh;
 
@@ -67,11 +66,10 @@
             }
             else {
                 e.target.setAttribute("class", "deselected");
-//                console.log('no');
 
                 var sesh = sessionStorage.array.split(",");
 
-                var index = sesh.indexOf(e.target.getAttribute("index"));
+                var index = sesh.indexOf(e.target.getAttribute("src"));
 
                 if (index > -1) {
                     sesh.splice(index, 1);
