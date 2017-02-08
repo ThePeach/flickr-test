@@ -8,20 +8,27 @@ function callback(data) {
 
 }
 
+/**
+ * Returns a div with the class specified
+ */
+function createBootstrapDiv(x) {
+    var div = document.createElement('DIV');
+    div.setAttribute("class", x);
+
+    return div;
+}
+
 
 function setUpImages(data) {
-    var containingDiv = document.createElement('DIV');
+    var htmlDiv = document.querySelector('.container-fluid');
+    var rowDiv = createBootstrapDiv("row");
+
 
     for (var i = 0; i < data["items"].length; i++) {
+
         var img = document.createElement('IMG');
         img.src = data["items"][i]["media"]["m"];
         img.alt = data["items"][i]["title"];
-        img.width = "200";
-        img.height = "200";
-
-        var classAttribute = document.createAttribute("class");
-        classAttribute.value = '';
-        img.setAttributeNode(classAttribute);
 
         if (sessionStorage.array === "") {
             var sesh = [];
@@ -36,16 +43,32 @@ function setUpImages(data) {
         }
 
 
-        containingDiv.appendChild(img);
+        var columnDiv = createBootstrapDiv("col-sm-3");
+        columnDiv.appendChild(img);
 
-        containingDiv.addEventListener('click', toggleSelected, false);
+        columnDiv.addEventListener('click', toggleSelected, false);
+
+
+        rowDiv.appendChild(columnDiv);
 
     }
+    htmlDiv.appendChild(rowDiv);
 
-    document.body.appendChild(containingDiv);
+
 }
 
 function toggleSelected(e) {
+    if (e.target.nodeName === 'DIV') {
+        // console.log(e.target.children[0]);
+
+        return;
+        // e.target = e.target.children[0];
+        // console.log(e.target.children);
+        // console.log(e.target);
+
+    }
+
+
     if (e.target.getAttribute("class") === "" || e.target.getAttribute("class") === "deselected") {
 
         e.target.setAttribute("class", "selected");

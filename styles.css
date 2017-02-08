@@ -1,3 +1,20 @@
-.selected {
-    border: 10px solid black;
+* {
+    box-sizing: border-box;
+}
+
+img.selected {
+    border: 2px dashed #ff8cce;
+    padding: 4px;
+}
+
+img {
+    margin: 15px;
+    padding: 6px;
+    width: 100%;
+}
+
+div {
+    /*max-width: 70%;*/
+    margin: 0 auto;
+    /*width: 66.64%;*/
 }
