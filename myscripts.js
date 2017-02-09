@@ -1,6 +1,7 @@
+/* global Store */
 
 function callback (data) {
-  STORE.init('selectedImages')
+  Store.init('selectedImages')
   setUpGallery(data)
 }
 
@@ -14,6 +15,7 @@ function createImage (imageData) {
 function setUpGallery (data) {
   const container = document.getElementById('gallery')
   let imgEl = null
+  let selectedImgs = []
 
   for (var i = 0; i < data['items'].length; i++) {
     const containingDiv = document.createElement('div')
@@ -21,8 +23,9 @@ function setUpGallery (data) {
 
     imgEl = createImage(data['items'][i])
 
-    if (window.sessionStorage.getItem(imgEl.src)) {
-      imgEl.classList.toggle('selected')
+    if (Store.inStore(imgEl.src)) {
+      containingDiv.classList.toggle('selected')
+      selectedImgs.push(imgEl.src)
     }
 
     containingDiv.appendChild(imgEl)
@@ -30,6 +33,8 @@ function setUpGallery (data) {
 
     container.appendChild(containingDiv)
   }
+  // prune unneded images from Store
+  Store.prune(selectedImgs)
 }
 
 function toggleSelected (e) {
@@ -39,9 +44,9 @@ function toggleSelected (e) {
   const isSelected = this.classList.contains('selected')
 
   if (isSelected) {
-    window.sessionStorage.setItem(this.src, true)
+    Store.addItem(this.firstChild.src)
   } else {
-    window.sessionStorage.removeItem(this.src)
+    Store.removeItem(this.firstChild.src)
   }
 }
 

@@ -1,10 +1,13 @@
-var STORE = (function () {
+const Store = (function () {
   let Storage = null
   let storageKey = null
 
+  /**
+   * @param {String} string
+   */
   function addItem (string) {
     const items = JSON.parse(Storage.getItem(storageKey))
-    if (string in items) {
+    if (items && items.indexOf(string) !== -1) {
       return false
     } else {
       items.push(string)
@@ -13,27 +16,58 @@ var STORE = (function () {
     Storage.setItem(storageKey, JSON.stringify(items))
   }
 
+  /**
+   * @param {String} string
+   */
   function removeItem (string) {
     const items = JSON.parse(Storage.getItem(storageKey))
-    if (string in items) {
+    if (items && items.indexOf(string) !== -1) {
       items.splice(items.indexOf(string), 1)
     }
 
     Storage.setItem(storageKey, JSON.stringify(items))
   }
 
+  /**
+   * @param {String} string
+   */
   function inStore (string) {
     const items = JSON.parse(Storage.getItem(storageKey))
-    if (string in items) {
+    if (items && items.indexOf(string) !== -1) {
       return true
     }
     return false
   }
 
+  /**
+   * @param {Array} stringList
+   */
+  function prune (stringList) {
+    const items = JSON.parse(Storage.getItem(storageKey))
+    let unused = []
+    let i
+
+    unused = items.filter(function (el) {
+      return stringList.indexOf(el) === -1
+    })
+
+    for (i = 0; i < unused.length; i++) {
+      items.splice(items.indexOf(unused[i]), 1)
+    }
+
+    Storage.setItem(storageKey, JSON.stringify(items))
+  }
+
+  /**
+   * @param {String} key
+   */
   function init (key) {
+    storageKey = key
     if (window.sessionStorage) {
       Storage = window.sessionStorage
-      storageKey = key
+    }
+    if (!window.sessionStorage.getItem(storageKey)) {
+      Storage.setItem(storageKey, JSON.stringify([]))
     }
   }
 
@@ -41,8 +75,7 @@ var STORE = (function () {
     init: init,
     addItem: addItem,
     removeItem: removeItem,
-    inStore: inStore
+    inStore: inStore,
+    prune: prune
   }
 })()
-
-module.exports()
