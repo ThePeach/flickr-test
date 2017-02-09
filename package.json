@@ -1,0 +1,25 @@
+{
+  "name": "flickr-test",
+  "version": "1.0.0",
+  "description": "Sainsbury's test",
+  "main": "myscripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadeleineSmith/flickr-test.git"
+  },
+  "author": "Madeleine Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MadeleineSmith/flickr-test/issues"
+  },
+  "homepage": "https://github.com/MadeleineSmith/flickr-test#readme",
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "eslint-config-standard": "^7.0.0-beta.0",
+    "eslint-plugin-promise": "^3.4.1",
+    "eslint-plugin-standard": "^2.0.1"
+  }
+}
