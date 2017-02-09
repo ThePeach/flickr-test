@@ -30,6 +30,14 @@ function setUpImages(data) {
         img.src = data["items"][i]["media"]["m"];
         img.alt = data["items"][i]["title"];
 
+
+
+
+        var columnDiv = createBootstrapDiv("col-sm-3");
+        columnDiv.appendChild(img);
+
+        columnDiv.addEventListener('click', toggleSelected, false);
+
         if (sessionStorage.array === "") {
             var sesh = [];
         }
@@ -39,15 +47,8 @@ function setUpImages(data) {
         }
 
         if (sesh.indexOf(img.getAttribute("src")) !== -1) {
-            img.setAttribute("class", "selected");
+            img.parentNode.classList.add("selected");
         }
-
-
-        var columnDiv = createBootstrapDiv("col-sm-3");
-        columnDiv.appendChild(img);
-
-        columnDiv.addEventListener('click', toggleSelected, false);
-
 
         rowDiv.appendChild(columnDiv);
 
@@ -58,51 +59,50 @@ function setUpImages(data) {
 }
 
 function toggleSelected(e) {
-    if (e.target.nodeName === 'DIV') {
-        // console.log(e.target.children[0]);
-
-        return;
-        // e.target = e.target.children[0];
-        // console.log(e.target.children);
-        // console.log(e.target);
-
-    }
+        if (e.target.parentNode.classList.length === 1 || e.target.parentNode.classList.contains("deselected")) {
 
 
-    if (e.target.getAttribute("class") === "" || e.target.getAttribute("class") === "deselected") {
+            if (!e.target.parentNode.classList.contains("row")) {
 
-        e.target.setAttribute("class", "selected");
+                if (e.target.parentNode.classList.contains("deselected")) {
+                    e.target.parentNode.classList.remove("deselected");
+                }
 
-        if (sessionStorage.array === "") {
-            sesh = [];
+                e.target.parentNode.classList.add("selected");
+
+                if (sessionStorage.array === "") {
+                    sesh = [];
+                }
+                else {
+                    sesh = sessionStorage.array.split(",");
+                }
+
+                sesh.push(e.target.getAttribute("src"));
+
+                sessionStorage.array = sesh;
+            }
+
+
+
         }
         else {
-            sesh = sessionStorage.array.split(",");
+            e.target.parentNode.classList.remove("selected");
+
+            e.target.parentNode.classList.add("deselected");
+
+            var sesh = sessionStorage.array.split(",");
+
+            var index = sesh.indexOf(e.target.getAttribute("src"));
+
+            if (index !== -1) {
+                sesh.splice(index, 1);
+            }
+
+            sessionStorage.array = sesh;
+            console.log(sessionStorage.array);
+
         }
-
-        sesh.push(e.target.getAttribute("src"));
-
-        sessionStorage.array = sesh;
-
-        console.log(sessionStorage.array);
-
     }
-    else {
-        e.target.setAttribute("class", "deselected");
-
-        var sesh = sessionStorage.array.split(",");
-
-        var index = sesh.indexOf(e.target.getAttribute("src"));
-
-        if (index > -1) {
-            sesh.splice(index, 1);
-        }
-
-        sessionStorage.array = sesh;
-        console.log(sessionStorage.array);
-
-    }
-}
 
 (function () {
     var tags = 'london';
