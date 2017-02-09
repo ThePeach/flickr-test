@@ -80,4 +80,6 @@ const Store = (function () {
   }
 })()
 
-module.exports = Store
+if (typeof module !== 'undefined') {
+  module.exports = Store
+}
