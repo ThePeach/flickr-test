@@ -1,10 +1,16 @@
 /* global Store */
 
+/**
+ * @param {Object} data
+ */
 function callback (data) {
   Store.init('selectedImages')
   setUpGallery(data)
 }
 
+/**
+ * @param {Object} imageData
+ */
 function createImage (imageData) {
   var imgEl = document.createElement('img')
   imgEl.src = imageData.media.m
@@ -12,31 +18,45 @@ function createImage (imageData) {
   return imgEl
 }
 
+/**
+ * @param {HTMLImgElement} imgEl
+ */
+function createWrappingDiv (imgEl) {
+  const containingDiv = document.createElement('div')
+  containingDiv.classList.add('col-md-3')
+
+  containingDiv.appendChild(imgEl)
+  containingDiv.addEventListener('click', toggleSelected, false)
+  return containingDiv
+}
+
+/**
+ * @param {Object} data
+ */
 function setUpGallery (data) {
   const container = document.getElementById('gallery')
-  let imgEl = null
   let selectedImgs = []
+  let wrappingDiv
+  let imageEl
 
   for (var i = 0; i < data['items'].length; i++) {
-    const containingDiv = document.createElement('div')
-    containingDiv.classList.add('col-md-3')
+    imageEl = createImage(data['items'][i])
+    wrappingDiv = createWrappingDiv(imageEl)
 
-    imgEl = createImage(data['items'][i])
-
-    if (Store.inStore(imgEl.src)) {
-      containingDiv.classList.toggle('selected')
-      selectedImgs.push(imgEl.src)
+    if (Store.inStore(imageEl.src)) {
+      wrappingDiv.classList.toggle('selected')
+      selectedImgs.push(imageEl.src)
     }
 
-    containingDiv.appendChild(imgEl)
-    containingDiv.addEventListener('click', toggleSelected, false)
-
-    container.appendChild(containingDiv)
+    container.appendChild(wrappingDiv)
   }
   // prune unneded images from Store
   Store.prune(selectedImgs)
 }
 
+/**
+ * @param {Event} e
+ */
 function toggleSelected (e) {
   this.classList.toggle('selected')
 
