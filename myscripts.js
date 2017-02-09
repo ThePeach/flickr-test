@@ -1,89 +1,53 @@
-function callback(data) {
 
-    if (sessionStorage.array === undefined) {
-        sessionStorage.array = [];
-
-    }
-    setUpImages(data);
-
+function callback (data) {
+  STORE.init('selectedImages')
+  setUpGallery(data)
 }
 
-
-function setUpImages(data) {
-    var containingDiv = document.createElement('DIV');
-
-    for (var i = 0; i < data["items"].length; i++) {
-        var img = document.createElement('IMG');
-        img.src = data["items"][i]["media"]["m"];
-        img.alt = data["items"][i]["title"];
-        img.width = "200";
-        img.height = "200";
-
-        var classAttribute = document.createAttribute("class");
-        classAttribute.value = '';
-        img.setAttributeNode(classAttribute);
-
-        if (sessionStorage.array === "") {
-            var sesh = [];
-        }
-        else {
-            var sesh = sessionStorage.array.split(",");
-
-        }
-
-        if (sesh.indexOf(img.getAttribute("src")) !== -1) {
-            img.setAttribute("class", "selected");
-        }
-
-
-        containingDiv.appendChild(img);
-
-        containingDiv.addEventListener('click', toggleSelected, false);
-
-    }
-
-    document.body.appendChild(containingDiv);
+function createImage (imageData) {
+  var imgEl = document.createElement('img')
+  imgEl.src = imageData.media.m
+  imgEl.title = imageData.title
+  return imgEl
 }
 
-function toggleSelected(e) {
-    if (e.target.getAttribute("class") === "" || e.target.getAttribute("class") === "deselected") {
+function setUpGallery (data) {
+  const container = document.getElementById('gallery')
+  let imgEl = null
 
-        e.target.setAttribute("class", "selected");
+  for (var i = 0; i < data['items'].length; i++) {
+    const containingDiv = document.createElement('div')
+    containingDiv.classList.add('col-md-3')
 
-        if (sessionStorage.array === "") {
-            sesh = [];
-        }
-        else {
-            sesh = sessionStorage.array.split(",");
-        }
+    imgEl = createImage(data['items'][i])
 
-        sesh.push(e.target.getAttribute("src"));
-
-        sessionStorage.array = sesh;
-
-        console.log(sessionStorage.array);
-
+    if (window.sessionStorage.getItem(imgEl.src)) {
+      imgEl.classList.toggle('selected')
     }
-    else {
-        e.target.setAttribute("class", "deselected");
 
-        var sesh = sessionStorage.array.split(",");
+    containingDiv.appendChild(imgEl)
+    containingDiv.addEventListener('click', toggleSelected, false)
 
-        var index = sesh.indexOf(e.target.getAttribute("src"));
+    container.appendChild(containingDiv)
+  }
+}
 
-        if (index > -1) {
-            sesh.splice(index, 1);
-        }
+function toggleSelected (e) {
+  this.classList.toggle('selected')
 
-        sessionStorage.array = sesh;
-        console.log(sessionStorage.array);
+  // find out the current state
+  const isSelected = this.classList.contains('selected')
 
-    }
+  if (isSelected) {
+    window.sessionStorage.setItem(this.src, true)
+  } else {
+    window.sessionStorage.removeItem(this.src)
+  }
 }
 
 (function () {
-    var tags = 'london';
-    var script = document.createElement('script');
-    script.src = 'http://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=callback& tags=' + tags;
-    document.head.appendChild(script);
-})();
+  var tags = 'london'
+  var script = document.createElement('script')
+  script.src = 'http://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=callback&tags=' + tags
+  document.head.appendChild(script)
+})()
