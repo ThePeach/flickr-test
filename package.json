@@ -4,7 +4,7 @@
   "description": "",
   "main": "myscripts.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -14,6 +14,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MadeleineSmith/flickr-test/issues"
+  },
+  "jest": {
+    "testPathDirs": ["__tests__"]
   },
   "homepage": "https://github.com/MadeleineSmith/flickr-test#readme",
   "devDependencies": {

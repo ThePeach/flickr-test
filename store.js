@@ -79,3 +79,5 @@ const Store = (function () {
     prune: prune
   }
 })()
+
+module.exports = Store
