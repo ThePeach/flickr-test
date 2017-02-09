@@ -8,9 +8,9 @@ function createBootstrapDiv (x) {
   return div
 }
 
-function callback(data) {
-  if (window.sessionStorage.array === undefined) {
-    window.sessionStorage.array = []
+function callback (data) {
+  if (window.sessionStorage.getItem('array') === null) {
+    window.sessionStorage.setItem('array', [])
   }
   setUpImages(data)
 }
@@ -28,10 +28,10 @@ function setUpImages (data) {
     columnDiv.appendChild(img)
 
     var sesh
-    if (window.sessionStorage.array === '') {
+    if (window.sessionStorage.getItem('array') === '') {
       sesh = []
     } else {
-      sesh = window.sessionStorage.array.split(',')
+      sesh = window.sessionStorage.getItem('array').split(',')
     }
 
     columnDiv.addEventListener('click', toggleSelected, false)
@@ -54,22 +54,22 @@ function toggleSelected (e) {
       }
 
       e.target.parentNode.classList.add('selected')
-      if (window.sessionStorage.array === '') {
+      if (window.sessionStorage.getItem('array') === '') {
         sesh = []
       } else {
-        sesh = window.sessionStorage.array.split(',')
+        sesh = window.sessionStorage.getItem('array').split(',')
       }
 
       sesh.push(e.target.getAttribute('src'))
 
-      window.sessionStorage.array = sesh
+      window.sessionStorage.setItem('array', sesh)
     }
   } else {
     e.target.parentNode.classList.remove('selected')
 
     e.target.parentNode.classList.add('deselected')
 
-    sesh = window.sessionStorage.array.split(',')
+    sesh = window.sessionStorage.getItem('array').split(',')
 
     var index = sesh.indexOf(e.target.getAttribute('src'))
 
@@ -77,8 +77,7 @@ function toggleSelected (e) {
       sesh.splice(index, 1)
     }
 
-    window.sessionStorage.array = sesh
-    console.log(window.sessionStorage.array)
+    window.sessionStorage.setItem('array', sesh)
   }
 }
 
@@ -88,3 +87,8 @@ function toggleSelected (e) {
   script.src = 'http://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=callback& tags=' + tags
   document.head.appendChild(script)
 })()
+
+
+// const and let
+// variable for 'array'
+// JSON.stringify() and JSON.parse() for storing array
