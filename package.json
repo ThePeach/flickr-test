@@ -16,7 +16,9 @@
     "url": "https://github.com/MadeleineSmith/flickr-test/issues"
   },
   "jest": {
-    "testPathDirs": ["__tests__"]
+    "testPathDirs": ["__tests__"],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage"
   },
   "homepage": "https://github.com/MadeleineSmith/flickr-test#readme",
   "devDependencies": {

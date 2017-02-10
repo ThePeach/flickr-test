@@ -43,7 +43,7 @@ function setUpGallery (data) {
     imageEl = createImage(data['items'][i])
     wrappingDiv = createWrappingDiv(imageEl)
 
-    if (Store.inStore(imageEl.src)) {
+    if (Store.contains(imageEl.src)) {
       wrappingDiv.classList.toggle('selected')
       selectedImgs.push(imageEl.src)
     }

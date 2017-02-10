@@ -2,11 +2,23 @@ const Store = (function () {
   let Storage = null
   let storageKey = null
 
+  function _getItems () {
+    let items
+    try {
+      items = JSON.parse(Storage.getItem(storageKey))
+    } catch (e) {
+      if (e instanceof TypeError) {
+        throw new Error('Run init to initialise the Store first')
+      }
+    }
+    return items
+  }
+
   /**
    * @param {String} string
    */
   function addItem (string) {
-    const items = JSON.parse(Storage.getItem(storageKey))
+    const items = _getItems()
     if (items && items.indexOf(string) !== -1) {
       return false
     } else {
@@ -20,7 +32,7 @@ const Store = (function () {
    * @param {String} string
    */
   function removeItem (string) {
-    const items = JSON.parse(Storage.getItem(storageKey))
+    const items = _getItems()
     if (items && items.indexOf(string) !== -1) {
       items.splice(items.indexOf(string), 1)
     }
@@ -31,8 +43,8 @@ const Store = (function () {
   /**
    * @param {String} string
    */
-  function inStore (string) {
-    const items = JSON.parse(Storage.getItem(storageKey))
+  function contains (string) {
+    const items = _getItems()
     if (items && items.indexOf(string) !== -1) {
       return true
     }
@@ -43,7 +55,7 @@ const Store = (function () {
    * @param {Array} stringList
    */
   function prune (stringList) {
-    const items = JSON.parse(Storage.getItem(storageKey))
+    const items = _getItems()
     let unused = []
     let i
 
@@ -75,7 +87,7 @@ const Store = (function () {
     init: init,
     addItem: addItem,
     removeItem: removeItem,
-    inStore: inStore,
+    contains: contains,
     prune: prune
   }
 })()
