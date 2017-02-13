@@ -1,8 +1,7 @@
-/* global done */
 var gulp = require('gulp')
 var browserSync = require('browser-sync').create()
 
-gulp.task('js-watch', function () {
+gulp.task('js-watch', function (done) {
   browserSync.reload()
   done()
 })

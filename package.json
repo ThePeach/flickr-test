@@ -4,7 +4,8 @@
   "description": "",
   "main": "myscripts.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "codeceptjs": "codeceptjs"
   },
   "repository": {
     "type": "git",
@@ -25,11 +26,14 @@
   "homepage": "https://github.com/MadeleineSmith/flickr-test#readme",
   "devDependencies": {
     "browser-sync": "^2.18.7",
+    "codeceptjs": "^0.5.0",
     "eslint": "^3.15.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.1",
     "eslint-plugin-standard": "^2.0.1",
     "gulp": "^3.9.1",
-    "jest": "^18.1.0"
+    "jest": "^18.1.0",
+    "nightmare": "^2.9.1",
+    "nightmare-upload": "^0.1.1"
   }
 }
