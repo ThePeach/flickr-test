@@ -3,14 +3,13 @@
 let assert = require('assert')
 
 class DOMElements extends Helper {
-  seeMoreThanElements (locator, count) {
-    this.helpers['Nightmare']._locate(locator).then(function (els) {
-      return assert(els.length >= count, `Found more than ${count} elements`)
-    })
-  }
 
-  clickRandom (locator) {
-    // @TODO
+  seeMoreThanElements (locator, count) {
+    this.helpers['Nightmare']._locate(locator).then((els) => {
+      if (els.length < count) {
+        assert.fail(els.length, count, `Found more than ${count} elements`)
+      }
+    })
   }
 }
 

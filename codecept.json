@@ -5,6 +5,9 @@
   "helpers": {
     "Nightmare": {
       "url": "http://localhost:3000"
+    },
+    "DOMElements": {
+      "require": "./__tests__/helpers/domelements_helper.js"
     }
   },
   "include": {
