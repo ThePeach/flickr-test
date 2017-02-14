@@ -10,7 +10,6 @@ Scenario('test gallery is displayed', (I) => {
 Scenario('selecting an element adds "selected" class', (I) => {
   I.amOnPage('/')
   I.seeElement('#gallery .col-md-3')
-  I.seeMoreThanElements('#gallery .col-md-3', 1)
   I.click('#gallery .col-md-3')
   I.seeElement('#gallery .selected')
 })

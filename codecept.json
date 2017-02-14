@@ -4,10 +4,7 @@
   "output": "./codecept-output",
   "helpers": {
     "Nightmare": {
-      "url": "http://localhost:3001"
-    },
-    "DOMElements": {
-      "require": "./__tests__/helpers/domelements_helper.js"
+      "url": "http://localhost:3000"
     }
   },
   "include": {
