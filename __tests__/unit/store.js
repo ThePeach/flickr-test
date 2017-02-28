@@ -1,5 +1,5 @@
 /* global jest test expect beforeEach */
-const Store = require('../js/store')
+const Store = require('../../js/store')
 
 beforeEach(() => {
   window.sessionStorage = {}

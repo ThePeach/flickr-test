@@ -18,7 +18,7 @@
   },
   "jest": {
     "testPathDirs": [
-      "__tests__"
+      "__tests__/unit"
     ],
     "collectCoverage": true,
     "coverageDirectory": "coverage"
