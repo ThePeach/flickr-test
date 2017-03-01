@@ -1,7 +1,7 @@
 {
   "name": "flickr-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sainsbury's JS test",
   "main": "myscripts.js",
   "scripts": {
     "test": "jest",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/MadeleineSmith/flickr-test.git"
   },
-  "author": "",
+  "author": "Matteo Pescarin <peach@smartart.it>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MadeleineSmith/flickr-test/issues"
