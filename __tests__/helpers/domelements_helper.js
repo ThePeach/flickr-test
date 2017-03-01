@@ -1,15 +1,23 @@
 /* global Helper */
 'use strict'
-let assert = require('assert')
+const assert = require('assert')
 
 class DOMElements extends Helper {
 
   seeMoreThanElements (locator, count) {
-    this.helpers['Nightmare']._locate(locator).then((els) => {
-      if (els.length < count) {
-        assert.fail(els.length, count, `Found more than ${count} elements`)
-      }
-    })
+    return this.helpers['Nightmare']._locate(locator)
+      .then((elementsArray) => {
+        if (elementsArray.length < count) {
+          return assert.fail(elementsArray.length, count, `Found more than ${count} elements`)
+        }
+      })
+  }
+
+  countElements (locator) {
+    return this.helpers['Nightmare']._locate(locator)
+      .then((elementsArray) => {
+        return elementsArray.length
+      })
   }
 }
 
