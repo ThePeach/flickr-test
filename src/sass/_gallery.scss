@@ -1,0 +1,31 @@
+// gallery
+
+.gallery {
+  @include container;
+
+  &_item {
+    @include span(4);
+    overflow: hidden;
+    margin-bottom: 1em;
+    
+    @include susy-breakpoint(30em, 12) {
+      @include gallery(3);
+      height: 5em;
+    }
+
+    position: relative;
+
+    &.is-selected::after {
+      display: block;
+      content: "";
+      position: absolute;
+      background-color: yellow;
+      top: .5em;
+      left: .5em;
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
+      border: 2px solid black;
+    }
+  }
+}

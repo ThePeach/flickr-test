@@ -23,7 +23,7 @@ function createImage (imageData) {
  */
 function createWrappingDiv (imgEl) {
   const containingDiv = document.createElement('div')
-  containingDiv.classList.add('col-md-3')
+  containingDiv.classList.add('gallery_item')
 
   containingDiv.appendChild(imgEl)
   containingDiv.addEventListener('click', toggleSelected, false)
@@ -44,7 +44,7 @@ function setUpGallery (data) {
     wrappingDiv = createWrappingDiv(imageEl)
 
     if (Store.contains(imageEl.src)) {
-      wrappingDiv.classList.toggle('selected')
+      wrappingDiv.classList.toggle('is-selected')
       selectedImgs.push(imageEl.src)
     }
 
@@ -58,10 +58,10 @@ function setUpGallery (data) {
  * @param {Event} e
  */
 function toggleSelected (e) {
-  this.classList.toggle('selected')
+  this.classList.toggle('is-selected')
 
   // find out the current state
-  const isSelected = this.classList.contains('selected')
+  const isSelected = this.classList.contains('is-selected')
 
   if (isSelected) {
     Store.addItem(this.firstChild.src)

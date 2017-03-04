@@ -1,5 +1,5 @@
 {
-  "tests": "./__tests__/*_test.js",
+  "tests": "./test/*_test.js",
   "timeout": 10000,
   "output": "./codecept-output",
   "helpers": {
@@ -7,11 +7,11 @@
       "url": "http://localhost:3000"
     },
     "DOMElements": {
-      "require": "./__tests__/helpers/domelements_helper.js"
+      "require": "./test/helpers/domelements_helper.js"
     }
   },
   "include": {
-    "I": "./__tests__/steps_file.js"
+    "I": "./test/steps_file.js"
   },
   "bootstrap": false,
   "mocha": {},
