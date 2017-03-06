@@ -26,6 +26,9 @@
   "homepage": "https://github.com/MadeleineSmith/flickr-test#readme",
   "devDependencies": {
     "autoprefixer": "^6.7.6",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-es2015-rollup": "^3.0.0",
     "browser-sync": "^2.18.7",
     "codeceptjs": "^0.5.0",
     "eslint": "^3.15.0",
@@ -33,6 +36,7 @@
     "eslint-plugin-promise": "^3.4.1",
     "eslint-plugin-standard": "^2.0.1",
     "gulp": "^3.9.1",
+    "gulp-if": "^2.0.2",
     "gulp-postcss": "^6.3.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.1",
@@ -41,6 +45,12 @@
     "nightmare-upload": "^0.1.1",
     "postcss": "^5.2.15",
     "precss": "^1.4.0",
+    "rollup": "^0.41.4",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
     "susy": "^2.2.12"
+  },
+  "dependencies": {
+    "axios": "^0.15.3"
   }
 }
