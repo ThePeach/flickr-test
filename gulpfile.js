@@ -66,7 +66,7 @@ gulp.task('serve', ['build'], function () {
     }
   })
 
-  gulp.watch('src/js/*.js', ['js-watch'])
+  gulp.watch('src/js/*.js', ['js'])
   gulp.watch('src/sass/**/*', ['sass'])
   gulp.watch('src/index.html', ['static'])
 })

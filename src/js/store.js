@@ -92,6 +92,8 @@ const Store = (function () {
   }
 })()
 
+export { Store as default }
+
 if (typeof module !== 'undefined') {
   module.exports = Store
 }
