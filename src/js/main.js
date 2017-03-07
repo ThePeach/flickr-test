@@ -1,20 +1,14 @@
-/* global Store */
-
-/**
- * @param {Object} data
- */
-function callback (data) {
-  Store.init('selectedImages')
-  setUpGallery(data)
-}
+import Flickr from './flickr'
+import Store from './store'
 
 /**
  * @param {Object} imageData
  */
 function createImage (imageData) {
   var imgEl = document.createElement('img')
-  imgEl.src = imageData.media.m
+  imgEl.src = Flickr.buildUrl(imageData, 'thumbnail')
   imgEl.title = imageData.title
+  imgEl.id = imageData.id
   return imgEl
 }
 
@@ -39,19 +33,22 @@ function setUpGallery (data) {
   let wrappingDiv
   let imageEl
 
-  for (var i = 0; i < data['items'].length; i++) {
-    imageEl = createImage(data['items'][i])
-    wrappingDiv = createWrappingDiv(imageEl)
+  Flickr.fetchRecent('london')
+    .then((images) => {
+      for (let i = 0; i < images.photo.length; i++) {
+        imageEl = createImage(images.photo[i])
+        wrappingDiv = createWrappingDiv(imageEl)
 
-    if (Store.contains(imageEl.src)) {
-      wrappingDiv.classList.toggle('is-selected')
-      selectedImgs.push(imageEl.src)
-    }
+        if (Store.contains(imageEl.id)) {
+          wrappingDiv.classList.toggle('is-selected')
+          selectedImgs.push(imageEl.id)
+        }
 
-    container.appendChild(wrappingDiv)
-  }
-  // prune unneded images from Store
-  Store.prune(selectedImgs)
+        container.appendChild(wrappingDiv)
+      }
+      // prune unneded images from Store
+      Store.prune(selectedImgs)
+    })
 }
 
 /**
@@ -64,15 +61,11 @@ function toggleSelected (e) {
   const isSelected = this.classList.contains('is-selected')
 
   if (isSelected) {
-    Store.addItem(this.firstChild.src)
+    Store.addItem(this.firstChild.id)
   } else {
-    Store.removeItem(this.firstChild.src)
+    Store.removeItem(this.firstChild.id)
   }
 }
 
-(function () {
-  var tags = 'london'
-  var script = document.createElement('script')
-  script.src = 'http://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=callback&tags=' + tags
-  document.head.appendChild(script)
-})()
+Store.init('selectedImages')
+setUpGallery()
